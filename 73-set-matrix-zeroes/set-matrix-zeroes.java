@@ -2,11 +2,28 @@ class Solution {
     public void setZeroes(int[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;
-        boolean colZero = false;
 
-        // Step 1: Scan and mark
+        boolean firstRowZero = false;
+        boolean firstColZero = false;
+
+        // Check if first row contains 0
+        for (int j = 0; j < n; j++) {
+            if (matrix[0][j] == 0) {
+                firstRowZero = true;
+                break;
+            }
+        }
+
+        // Check if first column contains 0
         for (int i = 0; i < m; i++) {
-            if (matrix[i][0] == 0) colZero = true;
+            if (matrix[i][0] == 0) {
+                firstColZero = true;
+                break;
+            }
+        }
+
+        // Use first row and first column as markers
+        for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
                 if (matrix[i][j] == 0) {
                     matrix[i][0] = 0;
@@ -15,24 +32,33 @@ class Solution {
             }
         }
 
-        // Step 2: Fill inner elements
+        // Set marked rows to 0
         for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
-                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+            if (matrix[i][0] == 0) {
+                for (int j = 1; j < n; j++) {
                     matrix[i][j] = 0;
                 }
             }
         }
 
-        // Step 3: Handle first row
-        if (matrix[0][0] == 0) {
+        // Set marked columns to 0
+        for (int j = 1; j < n; j++) {
+            if (matrix[0][j] == 0) {
+                for (int i = 1; i < m; i++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        // Set first row to 0
+        if (firstRowZero) {
             for (int j = 0; j < n; j++) {
                 matrix[0][j] = 0;
             }
         }
 
-        // Step 4: Handle first column
-        if (colZero) {
+        // Set first column to 0
+        if (firstColZero) {
             for (int i = 0; i < m; i++) {
                 matrix[i][0] = 0;
             }
