@@ -12,7 +12,7 @@ class Solution {
                 col--;
             }
             else {
-                row ++;
+                row++;
             }
         }
         return false;
